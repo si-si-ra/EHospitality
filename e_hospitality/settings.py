@@ -80,12 +80,8 @@ WSGI_APPLICATION = 'e_hospitality.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'e_hospitality', # The name of your database
-        'USER': 'postgres',    # Your PostgreSQL username
-        'PASSWORD': 'sisira',  # Your PostgreSQL password
-        'HOST': 'localhost',  # Or the IP address of the PostgreSQL server
-        'PORT': '5432',       # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
