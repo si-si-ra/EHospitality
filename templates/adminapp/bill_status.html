@@ -1,0 +1,96 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="text-center mb-4">Bill Status</h4>
+
+                <!-- Search Form -->
+                <form method="get" class="form-inline mb-4">
+                    <div class="input-group w-auto">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search" value="{{ request.GET.search }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Bill Status Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Patient Name</th>
+                                <th>Doctor Name</th>
+                                <th>Department</th>
+                                <th>Consultation Fee</th>
+                                <th>Total Bill</th>
+                                <th>Bill Status</th>
+                                <th>Actions</th> <!-- New column for View/Edit -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ appointment.patient_name }}</td>
+                                    <td>{{ appointment.doctor.name }}</td>
+                                    <td>{{ appointment.department.name }}</td>
+                                    <td>₹{{ appointment.consultation_fee }}</td>
+                                    <td>₹{{ appointment.total_bill }}</td>
+                                    <td>
+                                        {% if appointment.bill_status == 'paid' %}
+                                            <span class="badge bg-success">Paid</span>
+                                        {% else %}
+                                            <span class="badge bg-warning">Unpaid</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if appointment.bill %}
+                                            <a href="{% url 'view_bill' appointment.bill.id %}" class="btn btn-info btn-sm">View</a>
+                                            <a href="{% url 'edit_bill' appointment.bill.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                        {% else %}
+                                            <span>No Bill</span>
+                                        {% endif %}
+                                    </td>
+                                    
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page.paginator.page_range %}
+                        <li class="page-item {% if page.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

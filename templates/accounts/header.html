@@ -1,0 +1,23 @@
+<header id="header" class="header sticky-top">
+    <div class="branding d-flex align-items-center">
+        <div class="container position-relative d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center me-auto">
+                <h1 class="sitename">Medilab</h1>
+            </a>
+
+            <nav id="navmenu" class="navmenu">
+                <ul>
+                    <li><a href="{% url 'home' %}#hero">Home<br></a></li>
+                    <li><a href="{% url 'home' %}#about">About</a></li>
+                    <li><a href="{% url 'home' %}#services">Services</a></li>
+                    <li><a href="{% url 'home' %}#departments">Departments</a></li>
+                    <li><a href="{% url 'home' %}#doctors">Doctors</a></li>
+                    <li><a href="{% url 'home' %}#contact">Contact</a></li>
+                </ul>
+                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            </nav>
+
+            <a class="cta-btn d-none d-sm-block" href="{% url 'login' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+</header>

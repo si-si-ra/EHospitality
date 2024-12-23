@@ -1,0 +1,65 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<!-- Main Content -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="text-center mb-4">
+                    {% if form.instance.pk %}Edit{% else %}Add{% endif %} Department
+                </h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Render form fields -->
+                    <div class="mb-3">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.head.label_tag }}
+                        {{ form.head }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.contact_number.label_tag }}
+                        {{ form.contact_number }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.location.label_tag }}
+                        {{ form.location }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.image.label_tag }}
+                        {{ form.image }}
+                    </div>
+
+                    <!-- Show existing image if available -->
+                    {% if form.instance.image and form.instance.image.url %}
+                        <div class="mb-3">
+                            <label for="current_image" class="form-label">Current Image</label>
+                            <img src="{{ form.instance.image.url }}" alt="Department Image" class="img-thumbnail" width="150">
+                        </div>
+                    {% endif %}
+
+                    <!-- Submit Button -->
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            {% if form.instance.pk %}Update{% else %}Save{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

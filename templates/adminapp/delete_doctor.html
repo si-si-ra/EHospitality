@@ -1,0 +1,27 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Delete Doctor</h2>
+                
+                <p class="lead text-center">Are you sure you want to delete the doctor <strong>"{{ doctor.name }}"</strong>?</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Yes, Delete
+                        </button>
+                        <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> No, go back
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

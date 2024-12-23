@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Patient</title>
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+    <style>
+        
+        h2 {
+            margin-bottom: 1rem; /* Add spacing below the heading */
+            color: #01579b; /* Deep blue color for the heading */
+            font-size: 2rem; /* Make the heading visually prominent */
+        }
+        /* Form container styling */
+        form {
+            background-color: #ffffff; /* White form background */
+            text-align: center;
+        }
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #1977cc; /* Blue for label text */
+        }
+        /* Styling input fields */
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form input[type="date"],
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #b2ebf2; /* Light turquoise border */
+            border-radius: 4px;
+            background-color: #e0f7fa;
+            color: #1977cc;
+            font-size: 1rem;
+        }
+        form input::placeholder,
+        form textarea::placeholder {
+            color: #4fc3f7; /* Placeholder color */
+        }
+        /* Submit button styling */
+        form button {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #1977cc; /* Bright blue button */
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color: #0277bd; /* Darker blue on hover */
+        }
+        /* Registration link styling */
+        .register-link {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #0277bd;
+        }
+        .register-link a {
+            color: #0288d1; /* Link color */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .register-link a:hover {
+            color: #4fc3f7; /* Lighter blue on hover */
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <main class="d-flex align-items-center justify-content-center vh-100">
+        <div class="card shadow p-4" style="max-width: 400px; width: 100%;">
+            <h2 class="text-center mb-3">Register</h2>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="date" class="form-control" name="date_of_birth" required>
+                </div>
+                <div class="mb-3">
+                    <select class="form-select" name="gender" required>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                        <option value="O">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <textarea class="form-control" name="address" placeholder="Address" rows="2" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="phone_number" placeholder="Phone" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" name="cpassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+                <div class="text-center mt-3">
+                    <small>Already have an account? <a href="{% url 'login' %}">Login</a></small>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

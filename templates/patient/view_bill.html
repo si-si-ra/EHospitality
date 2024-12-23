@@ -1,0 +1,41 @@
+{% extends "patient/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+  <h2 class="text-center mb-4">Bill Details for Appointment #{{ bill.appointment.id }}</h2>
+  
+ 
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3>Consultation Fee: <span class="text-success">${{ bill.consultation_fee }}</span></h3>
+    </div>
+  </div>
+
+  <h4>Additional Charges</h4>
+  {% if bill.additional_charges.all %}
+    <ul class="list-group mb-4">
+      {% for charge in bill.additional_charges.all %}
+        <li class="list-group-item d-flex justify-content-between">
+          <span>{{ charge.charge_type }}</span>
+          <span class="text-success">${{ charge.amount }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No additional charges applied.</p>
+  {% endif %}
+
+  
+  <div class="card">
+    <div class="card-body">
+      <h3>Total Bill: <span class="text-danger">${{ total_bill }}</span></h3>
+    </div>
+  </div>
+
+  
+  <div class="mt-4">
+    <a href="#" class="btn btn-warning">Download Bill</a>
+  </div>
+</main>
+{% endblock %} 

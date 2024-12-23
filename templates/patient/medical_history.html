@@ -1,0 +1,63 @@
+
+{% extends "patient/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Medical History</h1>
+        
+        <div class="row mt-4">
+            {% for history in medical_histories %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header">
+                            Medical History #{{ forloop.counter }}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Patient: {{ history.patient.name }}</h5>
+                            
+                            <p><strong>Diagnosis:</strong></p>
+                            <p>{{ history.diagnosis|default:"N/A" }}</p>
+                            {% if history.diagnosis_files %}
+                                <p><a href="{{ history.diagnosis_files.url }}" class="btn btn-primary btn-sm">View Diagnosis Files</a></p>
+                            {% endif %}
+                            
+                            <p><strong>Medications:</strong></p>
+                            <p>{{ history.medications|default:"N/A" }}</p>
+                            {% if history.medications_files %}
+                                <p><a href="{{ history.medications_files.url }}" class="btn btn-primary btn-sm">View Medications Files</a></p>
+                            {% endif %}
+                            
+                            <p><strong>Allergies:</strong></p>
+                            <p>{{ history.allergies|default:"N/A" }}</p>
+                            {% if history.allergies_files %}
+                                <p><a href="{{ history.allergies_files.url }}" class="btn btn-primary btn-sm">View Allergies Files</a></p>
+                            {% endif %}
+                            
+                            <p><strong>Treatment History:</strong></p>
+                            <p>{{ history.treatment_history|default:"N/A" }}</p>
+                            {% if history.treatment_history_files %}
+                                <p><a href="{{ history.treatment_history_files.url }}" class="btn btn-primary btn-sm">View Treatment History Files</a></p>
+                            {% endif %}
+                            
+                            <p><strong>Created At:</strong> {{ history.created_at|date:"d M Y" }}</p>
+
+                            <!-- Edit and Delete Links inside the for loop -->
+                            <div class="mt-3">
+                                <a href="{% url 'edit_medical_history' history_id=history.id patient_id=patient.id %}" class="btn btn-warning btn-sm mr-2">Edit</a>
+                                <a href="{% url 'delete_medical_history' history_id=history.id patient_id=patient.id %}" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-warning text-center">
+                        No medical history records found.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}

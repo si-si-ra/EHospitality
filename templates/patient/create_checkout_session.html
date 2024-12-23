@@ -1,0 +1,10 @@
+{% extends "patient/base.html" %}
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<div class="container mt-5 text-center">
+    <h4>Redirecting to Payment Gateway...</h4>
+    <p>You're about to pay ₹{{ appointment.total_bill }} for your appointment.</p>
+    <p>Please wait while we redirect you to the payment page.</p>
+</div>
+</main>
+{% endblock %}

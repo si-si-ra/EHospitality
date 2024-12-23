@@ -1,0 +1,30 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="mb-4">Details of the {{ doctor.name }}</h2>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <img src="{{ doctor.image.url }}" alt="Profile Picture" class="img-thumbnail" width="600" height="600">
+                    </div>
+                    <div class="col-md-8">
+                        <p><strong>Name:</strong> {{ doctor.name }}</p>
+                        <p><strong>Qualification:</strong> {{ doctor.qualification }}</p>
+                        <p><strong>Department:</strong> {{ doctor.department }}</p>
+                        <p><strong>Consultation Start Time:</strong> {{ doctor.consultation_start_time }}</p>
+                        <p><strong>Consultation End Time:</strong> {{ doctor.consultation_end_time }}</p>
+                        <p><strong>Consultation Fee:</strong> ₹{{ doctor.consultation_fee }}</p>
+                        <p><strong>Email:</strong> {{ doctor.email }}</p>
+                        <p><strong>Address:</strong> {{ doctor.address }}</p>
+                        <p><strong>Phone:</strong> {{ doctor.phone }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

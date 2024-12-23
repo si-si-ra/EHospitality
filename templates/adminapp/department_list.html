@@ -1,0 +1,86 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="text-center mb-4">Department List</h4>
+                
+                <!-- Search Form -->
+                <form method="get" class="form-inline mb-4">
+                    <div class="input-group w-auto">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search by name or location" value="{{ request.GET.search }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Department Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Head</th>
+                                <th>Doctors</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for department in departments %}
+                            <tr>
+                                <td>{{ department.id }}</td>
+                                <td>{{ department.name }}</td>
+                                <td>{{ department.head }}</td>
+                                <td>
+                                    <a href="{% url 'department_doctors' department.id %}" class="btn btn-success btn-sm">List</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'department_details' department.id %}" class="btn btn-info btn-sm">View</a> |
+                                    <a href="{% url 'edit_department' department.id %}" class="btn btn-warning btn-sm">Edit</a> |
+                                    <a href="{% url 'delete_department' department.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No departments available.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{page.previous_page_number}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page.paginator.page_range %}
+                        <li class="page-item {% if page.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{page.next_page_number}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

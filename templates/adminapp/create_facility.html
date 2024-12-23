@@ -1,0 +1,59 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<!-- Main Content -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="text-center mb-4">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Facility</h2>
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Facility Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-bold">Facility Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter the Facility Name" value="{{ form.name.value|default:'' }}" required>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="mb-3">
+                        <label for="location" class="form-label fw-bold">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Enter the Location" value="{{ form.location.value|default:'' }}" required>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label fw-bold">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter a description of the facility" required>{{ form.description.value|default:'' }}</textarea>
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="mb-3">
+                        <label for="contact_number" class="form-label fw-bold">Contact Number</label>
+                        <input type="tel" class="form-control" id="contact_number" name="contact_number" placeholder="Enter the Contact Number" value="{{ form.contact_number.value|default:'' }}" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label fw-bold">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter the Email Address" value="{{ form.email.value|default:'' }}" required>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="mb-3">
+                        <label for="image" class="form-label fw-bold">Facility Image</label>
+                        <input type="file" class="form-control" id="image" name="image" required>
+                    </div>
+
+                    <div class="d-grid mt-3">
+                        <button type="submit" class="btn btn-primary">
+                            {% if form.instance.pk %}Update{% else %}Save{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

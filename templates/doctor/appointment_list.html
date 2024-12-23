@@ -1,0 +1,91 @@
+{% extends "doctor/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title">My Appointments</h4>
+                
+                <form method="get" class="form-inline mb-4">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search" value="{{ request.GET.search }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Patient</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Scheduled Date & Time</th>
+                                <th>Status</th>
+                                <th>Status Edit</th>
+                                <th>Prescription</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                                <tr>
+                                    <td>{{ appointment.id }}</td>
+                                    <td>{{ appointment.patient_name }}</td>
+                                    <td>{{ appointment.patient_email }}</td>
+                                    <td>{{ appointment.patient_phone }}</td>
+                                    <td>{{ appointment.scheduled_date }}</td>
+                                    <td>{{ appointment.status }}</td>
+                                    <td>
+                                        <a href="{% url 'update_status_of_appointment' appointment.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                    </td>
+                                    <td>
+                                        {% if appointment.prescription %}
+                                            <a href="{% url 'view_prescription' appointment.prescription.id %}" class="btn btn-info btn-sm">View</a>
+                                            <a href="{% url 'edit_prescription' appointment.prescription.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="{% url 'delete_prescription' appointment.prescription.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        {% else %}
+                                            <a href="{% url 'add_prescription' doctor_id=doctor.id appointment_id=appointment.id %}" class="btn btn-success btn-sm">Add</a>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">No appointments found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page.paginator.page_range %}
+                        <li class="page-item {% if page.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

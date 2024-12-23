@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+
+    <style>
+        /* Main content area */
+        main {
+            background-color: aliceblue;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        /* Table header styles */
+        table th {
+            background-color: #1977cc;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Table row styles */
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tbody tr:hover {
+            background-color: #e2e2e2;
+            cursor: pointer;
+        }
+
+        /* Button styles */
+        .btn-sm {
+            font-size: 0.875rem;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-sm:hover {
+            opacity: 0.8;
+        }
+
+        /* No doctors message */
+        table td.text-center {
+            font-size: 1.2rem;
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Sidebar Styling */
+        #sidebar {
+            background-color: #1977cc;
+            color: white;
+            padding-top: 20px;
+        }
+
+        #sidebar .nav-link {
+            color: white;
+            font-size: 1rem;
+        }
+
+        #sidebar .nav-link:hover {
+            background-color: #165d99;
+            color: white;
+        }
+
+        #sidebar .nav-link.active {
+            background-color: #005b8c;
+            color: white;
+        }
+
+        #sidebar i {
+            margin-right: 10px;
+        }
+
+        .nav-item .dropdown ul {
+            background-color: #1977cc;
+        }
+    </style>
+</head>
+<body>
+    {% include "accounts/header.html" %}
+    <div class="row">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="col-md-3 col-lg-2 vh-100 position-sticky shadow" style="background-color:#1977cc;color: var(--nav-color);">
+            <div class="position-sticky">
+                <ul class="nav flex-column pt-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'admin_dashboard' %}">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-md"></i> Doctor
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="doctorDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_doctor' %}"><i class="fas fa-plus-circle"></i>Add Doctor</a></li>
+                            <li><a class="dropdown-item" href="{% url 'doctor_list' %}"><i class="fas fa-list"></i>Doctor List</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-injured"></i> Patient
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="patientDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_patient' %}"><i class="fas fa-plus-circle"></i>Add Patient</a></li>
+                            <li><a class="dropdown-item" href="{% url 'patient_list' %}"><i class="fas fa-list"></i>Patient List</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="departmentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-building"></i> Department
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="departmentDropdown">
+                            <li><a class="dropdown-item" href="{% url 'department_create' %}"><i class="fas fa-plus-circle"></i>Add Department</a></li>
+                            <li><a class="dropdown-item" href="{% url 'department_list' %}"><i class="fas fa-list"></i>Department List</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="facilityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-hospital"></i> Facility
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="facilityDropdown">
+                            <li><a class="dropdown-item" href="{% url 'create_facility' %}"><i class="fas fa-plus-circle"></i>Add Facility</a></li>
+                            <li><a class="dropdown-item" href="{% url 'facility_list' %}"><i class="fas fa-list"></i>Facility List</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="additionalChargesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-file-invoice-dollar"></i> Additional Charges
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="additionalChargesDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'add_additional_charge' %}">
+                                    <i class="fas fa-plus-circle"></i> Add Additional Charge
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'additional_charge_list' %}">
+                                    <i class="fas fa-list"></i> Additional Charges List
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'appointment_list' %}">
+                            <i class="fas fa-calendar-check"></i> Appointments
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" id="additionalChargesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-file-invoice"></i> Bill
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="additionalChargesDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'completed_appointments' %}">
+                                    <i class="fas fa-plus-circle"></i> Generate Bills
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'bill_status' %}">
+                                    <i class="fas fa-list"></i> Bill Status
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+         
+         <!-- Main Content -->
+         {% block content %}
+         {% endblock %}
+
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+    <!-- Main JS File -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+</body>
+</html>

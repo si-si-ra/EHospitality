@@ -1,0 +1,91 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<!-- Main Content -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="text-center mb-4">Appointments List</h4>
+
+                <!-- Search Form -->
+                <form method="get" class="form-inline mb-4">
+                    <div class="input-group w-auto">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search" value="{{ request.GET.search }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Appointments Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Patient</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Doctor</th>
+                                <th>Department</th>
+                                <th>Consultation Hours</th>
+                                <th>Consultation Fee</th>
+                                <th>Scheduled Date & Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td>{{ appointment.id }}</td>
+                                <td>{{ appointment.patient_name }}</td>
+                                <td>{{ appointment.patient_email }}</td>
+                                <td>{{ appointment.patient_phone }}</td>
+                                <td>{{ appointment.doctor.name }}</td>
+                                <td>{{ appointment.department }}</td>
+                                <td>{{ appointment.doctor.consultation_hours }}</td>
+                                <td>{{ appointment.doctor.consultation_fee }}</td>
+                                <td>{{ appointment.scheduled_date }}</td>
+                                <td>{{ appointment.status }}</td>
+                                <td>
+                                    <a href="{% url 'update_appointment' appointment.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {% if page.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page.paginator.page_range %}
+                        <li class="page-item {% if page.number == num %}active{% endif %}">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endfor %}
+                        {% if page.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

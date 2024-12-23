@@ -1,0 +1,80 @@
+{% extends "doctor/base.html" %}
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="text-center mb-4">My Patients</h4>
+
+                <form method="get" class="form-inline mb-4">
+                    <div class="input-group w-auto">
+                        <input type="text" name="search" class="form-control mr-2" placeholder="Search by name or email" value="{{ request.GET.search }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Patient Name</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if patients %}
+                                {% for patient in patients %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ patient.name }}</td>
+                                        <td>{{ patient.phone }}</td>
+                                        <td>{{ patient.email }}</td>
+                                        <td>
+                                            <a href="{% url 'doctor/patient_details' patient.id doctor.id %}" class="btn btn-info btn-sm">View</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="5" class="text-center">No patients found</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if page.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% for num in page.paginator.page_range %}
+                                <li class="page-item {% if page.number == num %}active{% endif %}">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endfor %}
+                            {% if page.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

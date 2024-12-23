@@ -1,0 +1,66 @@
+{% extends "doctor/base.html" %}
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">Welcome,{{ doctor.name }}</h2>
+
+                <!-- Today's Appointments Section -->
+                <section class="mt-4">
+                    <h4 class="card-subtitle mb-3">Today's Appointments</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Patient</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Scheduled Time</th>
+                                    <th>Status</th>
+                                    <th>Prescription</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in todays_appointments %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ appointment.patient_name }}</td>
+                                    <td>{{ appointment.patient_email }}</td>
+                                    <td>{{ appointment.patient_phone }}</td>
+                                    <td>{{ appointment.scheduled_date|date:"H:i" }}</td>
+                                    <td>{{ appointment.get_status_display }}</td>
+                                    <td>
+                                        {% if appointment.prescription %}
+                                            <!-- If prescription exists -->
+                                            <a href="{% url 'view_prescription' appointment.prescription.id %}" class="btn btn-info btn-sm">View</a>
+                                            <a href="{% url 'edit_prescription' appointment.prescription.id %}" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="{% url 'delete_prescription' appointment.prescription.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        {% else %}
+                                            <!-- Link to add a new prescription -->
+                                            <a href="{% url 'add_prescription' doctor_id=doctor.id appointment_id=appointment.id %}" class="btn btn-success btn-sm">Add</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'update_status_of_appointment' appointment.id %}" class="btn btn-warning btn-sm">Edit Status</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted">No appointments for today.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

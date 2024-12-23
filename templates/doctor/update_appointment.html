@@ -1,0 +1,28 @@
+{% extends "doctor/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Update Appointment Time and Date - {{ appointment.name }}</h1>
+
+        <!-- Form Section -->
+        <div class="card">
+            <div class="card-body">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Update Appointment</button>
+                    </div>
+                </form>
+
+                <!-- Back to Appointment List Link -->
+                <div class="mt-4">
+                    <a href="{% url 'appointment_list' %}" class="btn btn-secondary">Back to Appointment List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

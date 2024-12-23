@@ -1,0 +1,21 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="mb-4">Edit Additional Charge</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'additional_charge_list' %}" class="btn btn-secondary ml-3">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

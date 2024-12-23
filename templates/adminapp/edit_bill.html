@@ -1,0 +1,78 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="container mt-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="mb-4">Edit Bill for Appointment #{{ bill.appointment.id }}</h2>
+        
+        <div>
+          <p><strong>Patient:</strong> {{ bill.appointment.patient_name }}</p>
+          <p><strong>Doctor:</strong> {{ bill.appointment.doctor.name }}</p>
+          <p><strong>Department:</strong> {{ bill.appointment.department.name }}</p>
+          <p><strong>Consultation Fee:</strong> ₹{{ bill.consultation_fee }}</p>
+        </div>
+
+        <hr>
+
+        <h4>Add Additional Charge</h4>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group mb-3">
+            <label for="charge_type">Charge Type:</label>
+            <select id="charge_type" name="charge_type" class="form-control">
+              <option value="" disabled selected>Select Charge</option>
+              {% for charge in available_charges %}
+                <option value="{{ charge.id }}">{{ charge.charge_type}} - ₹{{ charge.amount }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" name="add_charge" class="btn btn-primary">Add Charge</button>
+        </form>
+
+        <hr class="my-4">
+
+        <h4>Current Additional Charges</h4>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Charge Type</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Add Consultation Fee -->
+            <tr>
+              <td>1</td>
+              <td>Consultation Fee</td>
+              <td>₹{{ bill.consultation_fee }}</td>
+              <td>N/A</td>
+            </tr>
+            {% for charge in bill.additional_charges.all %}
+              <tr>
+                <td>{{ forloop.counter|add:"1" }}</td>
+                <td>{{ charge.charge_type }}</td>
+                <td>₹{{ charge.amount }}</td>
+                <td>
+                  <form method="POST" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="charge_id" value="{{ charge.id }}">
+                    <button type="submit" name="remove_charge" class="btn btn-danger btn-sm">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <h4>Total Bill: ₹{{ total_bill }}</h4>
+
+        <a href="{% url 'view_bill' bill.id %}" class="btn btn-success mt-3">View Final Bill</a>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

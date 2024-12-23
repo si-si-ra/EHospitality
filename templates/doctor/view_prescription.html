@@ -1,0 +1,20 @@
+{% extends "doctor/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Prescription Details</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Patient Name:</strong> {{ prescription.patient_name }}</p>
+                <p><strong>Disease:</strong> {{ prescription.disease }}</p>
+                <p><strong>Medical Tips:</strong> {{ prescription.medical_tips }}</p>
+                <p><strong>Medication:</strong> {{ prescription.medication }}</p>
+                <p><strong>Test Needed:</strong> {{ prescription.test_needed }}</p>
+                <p><strong>Next Consultation Date:</strong> {{ prescription.next_consultation_date }}</p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "patient/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Add Medical History for {{ patient.name }}</h2>
+
+        <!-- Card for form -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- Form for adding medical history -->
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <!-- Form fields rendered as paragraphs -->
+                        {{ form.as_p }}
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Add Medical History</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

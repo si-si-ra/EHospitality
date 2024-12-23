@@ -1,0 +1,28 @@
+{% extends "adminapp/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="mb-4">Details of the {{ facility.name }}</h2>
+
+                <div class="row mb-3">
+                  {% if facility.image %}
+                      <img src="{{ facility.image.url }}" alt="Facility Image" class="img-thumbnail" width="400" height="400">
+                  {% else %}
+                      <p>No image available</p>
+                  {% endif %}
+                    <div class="col-md-8">
+                        <p><strong>Facility Name:</strong> {{ facility.name }}</p>
+                        <p><strong>Location:</strong> {{ facility.location }}</p>
+                        <p><strong>Description:</strong> {{ facility.description }}</p>
+                        <p><strong>Contact Number:</strong> {{ facility.contact_number }}</p>
+                        <p><strong>Email:</strong> {{ facility.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

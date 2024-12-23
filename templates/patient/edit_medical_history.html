@@ -1,0 +1,25 @@
+{% extends "patient/base.html" %}
+
+{% block content %}
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container mt-4">
+        <!-- Card for form -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="text-center">Edit Medical History for {{ medical_history.patient.name }}</h1>
+                
+                <!-- Form for editing medical history -->
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
